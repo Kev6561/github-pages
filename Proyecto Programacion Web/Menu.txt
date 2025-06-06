@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurante Bocado UPIICSA</title>
+  <style>
+    @font-face {
+      font-family: 'CityBlueprint';
+      src: url('CityBlueprint.ttf') format('truetype');
+    }
+
+    body {
+      font-family: 'CityBlueprint', sans-serif;
+      background-color: #fff5cc;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      position: relative;
+      height: 100vh;
+    }
+
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      width: 100px;
+      height: 100px;
+      background-image: url('Circulo amarillo.jpg');
+      background-size: cover;
+      background-position: center;
+      border-radius: 50%;
+      z-index: 3;
+    }
+
+    .outer-rectangle {
+      position: absolute;
+      top: -5px;
+      right: 10px;
+      display: flex;
+      flex-direction: column;
+      background-color: #ffde59;
+      border-radius: 15px;
+      width: 950px;
+      height: 70px;
+      overflow: hidden;
+      opacity: 0.8;
+      z-index: 2;
+    }
+
+    .inner-rectangle {
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #caa97e;
+      width: 860px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      z-index: 3;
+    }
+
+    .restaurant-name {
+      color: black;
+      font-size: 50px;
+      font-family: 'CityBlueprint', sans-serif;
+      text-align: center;
+      z-index: 4;
+    }
+
+    .welcome-message-container {
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      width: auto;
+      background-color: #ff9900;
+      color: white;
+      font-size: 34px;
+      padding: 14px 22px;
+      border: 2px solid #ffde59;
+      border-radius: 10px;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .table-container {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr); /* 6 columnas */
+      gap: 10px;
+      width: 100%;
+      height: calc(100vh - 150px);
+      margin-top: 120px;
+      padding: 0 10px;
+      box-sizing: border-box;
+    }
+
+    .table-container .cell {
+      background-color: #ffcc99;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #333;
+      font-weight: bold;
+      transition: transform 0.3s ease, background-color 0.3s ease, height 0.3s ease;
+      height: 150px;
+      cursor: pointer;
+      outline: none;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .table-container .cell img {
+      max-width: 80%;
+      max-height: 80px;
+      border-radius: 8px;
+    }
+
+    .table-container .cell .description {
+      opacity: 0;
+      font-size: 14px;
+      margin-top: 5px;
+      transition: opacity 0.3s ease;
+    }
+
+    .table-container .cell:hover,
+    .table-container .cell:focus {
+      transform: scale(1.1);
+      background-color: #ff9900;
+      color: white;
+      height: 200px;
+    }
+
+    .table-container .cell:hover .description,
+    .table-container .cell:focus .description {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo"></div>
+
+  <div class="outer-rectangle">
+    <div class="inner-rectangle">
+      <div class="restaurant-name">Restaurante Bocado UPIICSA</div>
+    </div>
+  </div>
+
+  <div class="welcome-message-container">
+    ¿Qué te apetece hoy?
+  </div>
+
+  <div class="table-container" id="tableContainer">
+    <!-- Contenido generado dinámicamente -->
+  </div>
+
+  <script>
+     const platillos = [
+  	{
+    	nombre: "Hamburguesas",
+    	imagen: "Hambuerguesas.jpg", // Ruta del archivo de imagen
+    	descripcion: "Sección de hamburguesas"
+  	},
+
+	{
+    	nombre: "Cheese Burger Clásica",
+    	imagen: "Cheese Burger Clásica.jpg", // Ruta del archivo de imagen
+    	descripcion: "Carne de res, queso cheddar, lechuga, tomate y aderezo especial. – $80 MXN"
+  	},
+  	{ 
+    	nombre: "Doble Smash Burger", 
+    	imagen: "Doble Smash Burger.jpg", 
+    	descripcion: "Dos carnes delgadas con queso americano derretido. – $120 MXN" 
+  	},
+  	{ 
+    	nombre: "BBQ Bacon Burger", 
+    	imagen: "BBQ Bacon Burger.jpg", 
+    	descripcion: "Hamburguesa con salsa BBQ, tocino crujiente y cebolla caramelizada. – $110 MXN" 
+  	},
+	{ 
+    	nombre: "Spicy Jalapeño Burger", 
+    	imagen: "Spicy Jalapeño Burger.jpg", 
+    	descripcion: "Jalapeños, queso pepper jack y salsa picante. – $95 MXN" 
+  	},
+	{ 
+    	nombre: "Veggie Delight Burger", 
+    	imagen: "Veggie Delight Burger.jpg", 
+    	descripcion: "Hamburguesa vegetariana de lentejas con aguacate y aderezo de chipotle. – $90 MXN" 
+  	},
+	{
+    	nombre: "Hot-dogs",
+    	imagen: "HotDogs.jpg", // Ruta del archivo de imagen
+    	descripcion: "Sección de Hot-dogs"
+  	},
+	{ 
+    	nombre: "Classic Hot Dog", 
+    	imagen: "Classic Hot Dog.jpg", 
+    	descripcion: "Salchicha, mostaza, ketchup y cebolla. – $90 MXN" 
+  	},
+	{ 
+    	nombre: "Chili Cheese Dog", 
+    	imagen: "Chili Cheese Dog.jpg", 
+    	descripcion: "Hot dog con chili con carne y queso derretido. – $75 MXN" 
+  	},
+	{ 
+    	nombre: "Tex-Mex Dog", 
+    	imagen: "Tex-Mex Dog.jpg", 
+    	descripcion: "Salchicha, guacamole, jalapeños y queso rallado. – $70 MXN" 
+  	},
+	{ 
+    	nombre: "Bacon Wrapped Dog", 
+    	imagen: "Bacon Wrapped Dog.jpg", 
+    	descripcion: "Salchicha envuelta en tocino, con mayonesa y mostaza dulce. – $80 MXN" 
+  	},
+	{ 
+    	nombre: "Veggie Dog", 
+    	imagen: "Veggie Dog.jpg", 
+    	descripcion: "Salchicha vegetal con hummus y verduras frescas. – $65 MXN" 
+  	},
+	{
+    	nombre: "Tacos",
+    	imagen: "Tacos.jpg", // Ruta del archivo de imagen
+    	descripcion: "Sección de Tacos"
+  	},
+	{ 
+    	nombre: "Taco de Carne Asada", 
+    	imagen: "Taco de Carne Asada.jpg", 
+    	descripcion: "Tortilla suave con carne asada, cebolla y cilantro. – $30 MXN (por taco)" 
+  	},
+	{ 
+    	nombre: "Taco de Pollo Buffalo", 
+    	imagen: "Taco de Pollo Buffalo.jpg", 
+    	descripcion: "Pollo estilo buffalo con aderezo ranch y lechuga. – $35 MXN (por taco)" 
+  	},
+	{
+    	nombre: "Burritos",
+    	imagen: "Burrito.jpg", // Ruta del archivo de imagen
+    	descripcion: "Sección de burritos"
+  	},
+	{ 
+    	nombre: "Burrito Supremo", 
+    	imagen: "Burrito Supremo.jpg", 
+    	descripcion: "Carne, arroz, frijoles, queso, guacamole y crema. – $100 MXN" 
+  	},
+	{ 
+    	nombre: "Burrito Vegano", 
+    	imagen: "Burrito Vegano.jpg", 
+    	descripcion: "Relleno de arroz integral, frijoles negros, aguacate y verduras. – $90 MXN" 
+  	},
+	{ 
+    	nombre: "Taco Dorado de Papa", 
+    	imagen: "Taco Dorado de Papa.jpg", 
+    	descripcion: "Tortilla crujiente rellena de puré de papa sazonado. – $25 MXN (por taco)" 
+  	},
+	{
+    	nombre: "Pizzas",
+    	imagen: "Pizzas.jpg", // Ruta del archivo de imagen
+    	descripcion: "Sección de pizzas"
+  	},
+
+	{ 
+    	nombre: "Pepperoni Lover", 
+    	imagen: "Pepperoni Lover.jpg", 
+    	descripcion: "Pizza con extra pepperoni y queso mozzarella. – $120 MXN" 
+  	},
+	{ 
+    	nombre: "Hawaiana", 
+    	imagen: "Hawaiana.jpg", 
+    	descripcion: "Jamón, piña y queso mozzarella. – $110 MXN" 
+  	},
+	{ 
+    	nombre: "BBQ Chicken Pizza", 
+    	imagen: "BBQ Chicken Pizza.jpg", 
+    	descripcion: "Jamón, piña y queso mozzarella. – $130 MXN" 
+  	},
+	{ 
+    	nombre: "Four Cheese Pizza", 
+    	imagen: "Four Cheese Pizza.jpg", 
+    	descripcion: "Mozzarella, parmesano, cheddar y gouda. – $125 MXN" 
+  	},
+	{ 
+    	nombre: "Veggie Delight Pizza", 
+    	imagen: "Veggie Delight Pizza.jpg", 
+    	descripcion: "Pimientos, champiñones, cebolla y aceitunas. – $115 MXN" 
+  	},
+	{
+    	nombre: "Sandwiches",
+    	imagen: "Sandwiches.jpg", // Ruta del archivo de imagen
+    	descripcion: "Sección de sandwiches"
+  	},
+	{ 
+    	nombre: "Club Sandwich", 
+    	imagen: "Club Sandwich.jpg", 
+    	descripcion: "Pollo, tocino, queso, lechuga y tomate. – $90 MXN" 
+  	},
+	{ 
+    	nombre: "Philly Cheese Steak", 
+    	imagen: "Philly Cheese Steak.jpg", 
+    	descripcion: "Carne de res, pimientos y queso derretido en pan suave." 
+  	},
+	{ 
+    	nombre: "Chicken Caesar Wrap", 
+    	imagen: "Chicken Caesar Wrap.jpg", 
+    	descripcion: "Pollo asado, lechuga, queso parmesano y aderezo César." 
+  	},
+	{ 
+    	nombre: "Buffalo Chicken Wrap", 
+    	imagen: "Buffalo Chicken Wrap.jpg", 
+    	descripcion: "Pollo estilo buffalo con zanahoria, apio y ranch." 
+  	},
+	{ 
+    	nombre: "Veggie Wrap", 
+    	imagen: "Veggie Wrap.jpg", 
+    	descripcion: "Tortilla rellena de hummus, aguacate, zanahoria y espinacas" 
+  	},
+	{
+    	nombre: "Complementos y Snacks",
+    	imagen: "CYS.jpg", // Ruta del archivo de imagen
+    	descripcion: "Sección de Complementos y Snacks"
+  	},
+	{ 
+    	nombre: "Papas a la Francesa", 
+    	imagen: "Papas a la francesa.jpg", 
+    	descripcion: "Con sal o aderezadas con queso y tocino. – $50 MXN" 
+  	},
+	{ 
+    	nombre: "Aros de Cebolla", 
+    	imagen: "Aros de cebolla fritos.jpg", 
+    	descripcion: "Crujientes y servidos con salsa especial. – $55 MXN" 
+  	},
+	{ 
+    	nombre: "Chicken Nuggets", 
+    	imagen: "Chicken Nuggets.jpg", 
+    	descripcion: "Nuggets de pollo con diferentes salsas para acompañar. – (8 piezas) – $75 MXN" 
+  	},
+	{ 
+    	nombre: "Loaded Fries", 
+    	imagen: "Loaded Fries.jpg", 
+    	descripcion: "Papas fritas cubiertas con chili, queso y jalapeños. – $85 MXN" 
+  	},
+	{ 
+    	nombre: "Mozzarella Sticks", 
+    	imagen: "Mozzarella Sticks.jpg", 
+    	descripcion: "Palitos de queso empanizado con salsa marinara. (6 piezas) – $70 MXN" 
+  	},
+	{
+    	nombre: "Bebidas",
+    	imagen: "Bebidas.jpg", // Ruta del archivo de imagen
+    	descripcion: "Sección de bebidas"
+  	},
+	{ 
+    	nombre: "Coca-Cola Clásica", 
+    	imagen: "Coca-Cola Clásica.jpg", 
+    	descripcion: "Una bebida refrescante y carbonatada con el sabor inconfundible de la receta original de Coca-Cola. – $35 MXN" 
+  	},
+	{ 
+    	nombre: "Coca-Cola Light/Diet", 
+    	imagen: "Coca-Cola LightDiet.jpg", 
+    	descripcion: "La versión baja en calorías de Coca-Cola, con el mismo sabor refrescante y menos azúcar. – $35 MXN" 
+  	},
+	{ 
+    	nombre: "Sprite", 
+    	imagen: "Sprite.jpg", 
+    	descripcion: "Una soda transparente y burbujeante con un refrescante sabor a limón-lima. – $35 MXN" 
+  	},
+	{ 
+    	nombre: "Fanta", 
+    	imagen: "Fanta de Naranja.jpg", 
+    	descripcion: "Soda burbujeante con un vibrante sabor a naranja. – $35 MXN" 
+  	},
+	{ 
+    	nombre: "Pepsi", 
+    	imagen: "Pepsi.jpg", 
+    	descripcion: "Una bebida carbonatada con un sabor distintivo y dulce. – $35 MXN" 
+  	},
+	{ 
+    	nombre: "Limonada Natural", 
+    	imagen: "Limonada Natural.jpg", 
+    	descripcion: "Una mezcla fresca de jugo de limón recién exprimido, agua y un toque de azúcar. – $40 MXN" 
+  	},
+	{ 
+    	nombre: "Limonada de Fresa", 
+    	imagen: "Limonada de Fresa.jpg", 
+    	descripcion: "Una combinación refrescante de limonada natural con un toque dulce y afrutado de fresas frescas. – $45 MXN" 
+  	},
+	{ 
+    	nombre: "Soda de Maracuyá", 
+    	imagen: "Soda de Maracuyá.jpg", 
+    	descripcion: "Una bebida burbujeante con el exótico sabor tropical del maracuyá. – $50 MXN" 
+  	},
+	{ 
+    	nombre: "Jugo de Naranja Fresca", 
+    	imagen: "Jugo de Naranja Fresco.jpg", 
+    	descripcion: "Jugo 100% natural extraído de naranjas frescas. – $50 MXN" 
+  	},
+	{ 
+    	nombre: "Jugo de Mango", 
+    	imagen: "Jugo de Mango.jpg", 
+    	descripcion: "Una bebida natural y cremosa, elaborada con mangos frescos. – $55 MXN" 
+  	}
+	];
+
+    const container = document.getElementById("tableContainer");
+
+    platillos.forEach((platillo, index) => {
+      const cell = document.createElement("div");
+      cell.classList.add("cell");
+      cell.tabIndex = 0; // Permite foco con teclado
+      cell.innerHTML = `
+        <img src="${platillo.imagen}" alt="${platillo.nombre}">
+        <div>${platillo.nombre}</div>
+        <div class="description">${platillo.descripcion}</div>
+      `;
+      container.appendChild(cell);
+    });
+</script>
+</body>
+</html>

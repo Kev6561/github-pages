@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurante Bocado UPIICSA</title>
+    <style>
+        /* Fuentes personalizadas */
+        @font-face {
+            font-family: 'CityBlueprint';
+            src: url('CityBlueprint.ttf') format('truetype');
+        }
+
+        /* Estilos generales del cuerpo */
+        body {
+            font-family: 'CityBlueprint', sans-serif;
+            background-color: #fff5cc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Fondo decorativo */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('Pizza_animada.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 40%;
+            background-attachment: fixed;
+            z-index: 1;
+            opacity: 0.3;
+        }
+
+        /* Logo */
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 150px;
+            height: 150px;
+            background-image: url('Circulo amarillo.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            z-index: 3;
+        }
+
+        /* Título superior */
+        .top-rectangle {
+            position: absolute;
+            top: -30px;
+            right: 20px;
+            background-color: #ff9900;
+            color: #ffffff;
+            font-size: 65px;
+            padding: 25px 60px;
+            border: 2px solid #000000;
+            z-index: 4;
+        }
+
+        /* Imágenes decorativas */
+        .chef-image {
+            position: absolute;
+            bottom: 100px;
+            right: 140px;
+            width: 230px;
+            z-index: 2;
+        }
+
+        .olla-image {
+            position: absolute;
+            bottom: 40px;
+            left: 30px;
+            width: 250px;
+            z-index: 2;
+        }
+
+        .cutlery-image {
+            position: absolute;
+            top: 170px;
+            left: 100px;
+            width: 150px;
+            height: 150px;
+            background-image: url('Cuchara-tenedor.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            z-index: 2;
+        }
+
+        .soda-image {
+            position: absolute;
+            bottom: 140px;
+            left: 210px;
+            width: 270px;
+            height: 280px;
+            background-image: url('Refresco animado.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            z-index: 3;
+        }
+
+        /* Formulario */
+        .register-form {
+            width: 550px;
+            height: auto;
+            padding: 30px;
+            background-color: #fff;
+            border: 6px solid #ffde59;
+            box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.5);
+            z-index: 5;
+            margin-top: 120px;
+            max-height: 85vh;
+            overflow-y: auto;
+            opacity: 0.9;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 30px; /* Tamaño aumentado */
+            margin-bottom: 10px;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            font-size: 28px; /* Tamaño aumentado */
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        input[type="radio"] {
+            transform: scale(1.5);
+        }
+
+        /* Botones */
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #ffd966;
+            color: #ec8d1e;
+            font-size: 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #ffbf40;
+        }
+
+        .volver-button {
+            width: 100%;
+            background-color: #ffd966;
+            color: #ec8d1e;
+        }
+
+        .volver-button:hover {
+            background-color: #ffbf40;
+        }
+
+        .warning {
+            color: red;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo -->
+    <div class="logo"></div>
+
+    <!-- Título -->
+    <div class="top-rectangle">¡Reserva gratis!</div>
+
+    <!-- Imágenes decorativas -->
+    <img class="chef-image" src="Niña Chef.png" alt="Niña Chef">
+    <img class="olla-image" src="Olla animada.png" alt="Olla">
+    <div class="cutlery-image"></div>
+    <div class="soda-image"></div>
+
+    <!-- Formulario de registro -->
+    <form class="register-form" onsubmit="nextStep(event)">
+        <div class="row">
+            <label>Método de Pago</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" name="metodo_pago" id="credito" value="credito" required>
+                    <label for="credito">Tarjeta de crédito o débito</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" name="metodo_pago" id="transferencia" value="transferencia">
+                    <label for="transferencia">Transferencias electrónicas</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" name="metodo_pago" id="efectivo" value="efectivo">
+                    <label for="efectivo">Efectivo</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" name="metodo_pago" id="vales" value="vales">
+                    <label for="vales">Vales o tarjetas regalo</label>
+                </div>
+            </div>
+        </div>
+        <p class="warning">Llegar a tiempo o la reserva se cancela. Tiempo máx. de espera 10 minutos.</p>
+        <button type="submit">Reservar</button>
+        <button type="button" class="volver-button" onclick="volver()">Volver</button>
+    </form>
+
+    <script>
+        function nextStep(event) {
+            event.preventDefault();
+            alert('Datos de pago registrados correctamente. Reserva realizada.');
+            window.location.href = "Interfaz principal.html"; // Redirige a la interfaz principal
+        }
+
+        function volver() {
+            window.location.href = "Reservacion.html"; // Redirige a la interfaz de Reservacion
+        }
+    </script>
+</body>
+</html>
+
+

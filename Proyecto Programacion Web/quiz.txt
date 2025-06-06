@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia - HKC</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fff9e6;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            background-color: #fdbd32;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+        .btn-orange {
+            background-color: #fdbd32;
+            color: white;
+        }
+        .btn-orange:hover {
+            background-color: #e6a82d;
+            color: white;
+        }
+        .question-box {
+            background-color: white;
+            border: 2px solid #fdbd32;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .answer-btn {
+            background-color: #fdbd32;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 10px;
+        }
+        .answer-btn:hover {
+            background-color: #e6a82d;
+        }
+        .info-box {
+            background-color: #fff4d6;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .info-box span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Contesta la siguiente trivia</div>
+
+    <div class="container mt-4">
+        <div class="text-center mb-3">
+            <h2>¡Gana muchos descuentos!</h2>
+            <p>"Demuestra cuánto sabes sobre nuestra comida rápida y desbloquea sorpresas deliciosas."</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 d-flex justify-content-between align-items-center">
+                <button class="btn btn-orange" onclick="window.location.href='Interfaz principal.html'">Volver</button>
+
+                <div class="info-box">
+                    <span>Puntos acumulados:</span> <input id="score" type="text" value="0" disabled style="border: none; width: 50px; text-align: center; background: none;">
+                </div>
+
+                <div class="info-box">
+                    <span>Tiempo:</span> <span id="timer" style="color: red; font-size: 1.2rem;">5:00</span>
+                </div>
+
+                <button class="btn btn-orange" id="startTrivia">Iniciar</button>
+            </div>
+        </div>
+
+        <div id="question-container" class="question-box text-center">
+            <h4 id="question-text">¿En qué década se popularizaron los restaurantes de comida rápida?</h4>
+        </div>
+
+        <div id="answers-container" class="d-flex justify-content-center">
+            <button class="answer-btn" onclick="checkAnswer(1)">1920s</button>
+            <button class="answer-btn" onclick="checkAnswer(2)">1950s</button>
+            <button class="answer-btn" onclick="checkAnswer(3)">1980s</button>
+            <button class="answer-btn" onclick="checkAnswer(4)">1990s</button>
+        </div>
+
+        <div id="result-container" class="mt-4 text-center"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                text: "¿En qué década se popularizaron los restaurantes de comida rápida?",
+                options: ["1920s", "1950s", "1980s", "1990s"],
+                correct: 2
+            },
+            {
+                text: "¿Cuál es el país con más restaurantes de comida rápida en el mundo?",
+                options: ["Estados Unidos", "China", "México", "India"],
+                correct: 1
+            },
+            {
+                text: "¿Cuántos platillos principales tiene nuestro menú actualmente?",
+                options: ["10", "15", "20", "30"],
+                correct: 4
+            },
+            {
+                text: "¿Cuál fue el primer restaurante de comida rápida en el mundo?",
+                options: ["McDonald’s", "White Castle", "Burger King", "KFC"],
+                correct: 2
+            },
+            {
+                text: "¿En qué año abrimos las puertas de nuestro restaurante?",
+                options: ["2010", "2015", "2018", "2020"],
+                correct: 2
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let timer;
+        let timeRemaining = 300; // 5 minutes in seconds
+
+        function loadQuestion() {
+            if (currentQuestion < questions.length) {
+                const question = questions[currentQuestion];
+                document.getElementById("question-text").textContent = question.text;
+
+                const answersContainer = document.getElementById("answers-container");
+                answersContainer.innerHTML = "";
+                question.options.forEach((option, index) => {
+                    const button = document.createElement("button");
+                    button.textContent = option;
+                    button.className = "answer-btn";
+                    button.onclick = () => checkAnswer(index + 1);
+                    answersContainer.appendChild(button);
+                });
+            } else {
+                showResults();
+            }
+        }
+
+        function checkAnswer(selected) {
+            const question = questions[currentQuestion];
+            if (selected === question.correct) {
+                score++;
+            }
+            document.getElementById("score").value = score;
+            currentQuestion++;
+            loadQuestion();
+        }
+
+        function startTimer() {
+            timer = setInterval(() => {
+                if (timeRemaining <= 0) {
+                    clearInterval(timer);
+                    showResults();
+                } else {
+                    timeRemaining--;
+                    updateTimerDisplay();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            document.getElementById("timer").textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+        }
+
+        function showResults() {
+            clearInterval(timer);
+            const resultContainer = document.getElementById("result-container");
+            let message = "";
+
+            if (score <= 2) {
+                message = "¡Gracias por participar! Mejor suerte la próxima vez.";
+            } else if (score === 3) {
+                message = "¡Buen trabajo! Has ganado un 10% de descuento.";
+            } else if (score === 4) {
+                message = "¡Increíble! Te llevas un 15% de descuento.";
+            } else if (score === 5) {
+                message = "¡Eres un experto en comida rápida! Tienes un 20% de descuento.";
+            }
+
+            resultContainer.innerHTML = `<h3>${message}</h3>`;
+
+            document.getElementById("question-container").style.display = "none";
+            document.getElementById("answers-container").style.display = "none";
+        }
+
+        document.getElementById("startTrivia").onclick = () => {
+            currentQuestion = 0;
+            score = 0;
+            timeRemaining = 300;
+            document.getElementById("score").value = score;
+            document.getElementById("question-container").style.display = "block";
+            document.getElementById("answers-container").style.display = "flex";
+            document.getElementById("result-container").innerHTML = "";
+            updateTimerDisplay();
+            startTimer();
+            loadQuestion();
+        };
+
+        loadQuestion();
+    </script>
+</body>
+</html>

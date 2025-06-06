@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurante Bocado UPIICSA</title>
+  <style>
+    @font-face {
+      font-family: 'CityBlueprint';
+      src: url('CityBlueprint.ttf') format('truetype');
+    }
+
+    body {
+      font-family: 'CityBlueprint', sans-serif;
+      background-color: #fff5cc;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('Pizza_animada.jpg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 40%;
+      background-attachment: fixed;
+      z-index: 1;
+      opacity: 0.3;
+    }
+
+    .logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 150px;
+      height: 150px;
+      background-image: url('Circulo amarillo.jpg');
+      background-size: cover;
+      background-position: center;
+      border-radius: 50%;
+      z-index: 3;
+    }
+
+    .top-rectangle {
+      position: absolute;
+      top: -30px;
+      right: 20px;
+      background-color: #ff9900;
+      color: #ffffff;
+      font-size: 65px;
+      padding: 15px 30px;
+      border: 2px solid #000000;
+      z-index: 4;
+    }
+
+    .chef-image {
+      position: absolute;
+      bottom: 100px;
+      right: 140px;
+      width: 230px;
+      height: auto;
+      z-index: 2;
+    }
+
+    .olla-image {
+      position: absolute;
+      bottom: 40px;
+      left: 30px;
+      width: 250px;
+      height: auto;
+      z-index: 2;
+    }
+
+    .cutlery-image {
+      position: absolute;
+      top: 170px;
+      left: 100px;
+      width: 150px;
+      height: 150px;
+      z-index: 2;
+      background-image: url('Cuchara-tenedor.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+    }
+
+    .soda-image {
+      position: absolute;
+      bottom: 40px;
+      left: 300px;
+      width: 250px;
+      height: 280px;
+      background-image: url('Refresco animado.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      z-index: 3;
+    }
+
+    .register-form {
+      width: 500px;
+      background-color: #fff;
+      padding: 20px;
+      border: 6px solid #ffde59;
+      box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.5);
+      position: relative;
+      z-index: 5;
+      margin-top: 120px;
+      max-height: 75vh;
+      overflow-y: auto;
+      opacity: 0.85;
+    }
+
+    .form-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .icon-image {
+      width: 80px;
+      height: 80px;
+      background-image: url('Icono persona.png');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+
+    .form-id {
+      font-size: 28px;
+      font-weight: bold;
+      color: black;
+      margin-left: -20px;
+    }
+
+    .row {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    select, input[type="text"], textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #e0a96d;
+      border-radius: 5px;
+      background-color: #fff8ee;
+    }
+
+    textarea {
+      resize: none;
+      height: 80px;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      background-color: #ffd966;
+      color: #ec8d1e;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #ffbf40;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo"></div>
+  <div class="top-rectangle">¡El mejor asiento es tuyo!</div>
+  <img class="chef-image" src="Niña Chef.png" alt="Niña Chef">
+  <img class="olla-image" src="Olla animada.png" alt="Olla">
+  <div class="cutlery-image"></div>
+  <div class="soda-image"></div>
+
+  <form class="register-form" onsubmit="nextStep(event)">
+    <div class="form-header">
+      <div class="icon-image"></div>
+      <div class="form-id">XXXXXXX123</div>
+    </div>
+    <div class="row">
+      <label>Fecha y Hora</label>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <select id="day" required>
+          <option value="" disabled selected>Día</option>
+          <script>
+            for (let i = 1; i <= 31; i++) {
+              document.write(`<option value="${i}">${i}</option>`);
+            }
+          </script>
+        </select>
+        <select id="month" required>
+          <option value="" disabled selected>Mes</option>
+          <option value="1">Enero</option>
+          <option value="2">Febrero</option>
+          <option value="3">Marzo</option>
+          <option value="4">Abril</option>
+          <option value="5">Mayo</option>
+          <option value="6">Junio</option>
+          <option value="7">Julio</option>
+          <option value="8">Agosto</option>
+          <option value="9">Septiembre</option>
+          <option value="10">Octubre</option>
+          <option value="11">Noviembre</option>
+          <option value="12">Diciembre</option>
+        </select>
+        <select id="year" required>
+          <option value="" disabled selected>Año</option>
+          <script>
+            const currentYear = new Date().getFullYear();
+            for (let i = currentYear; i <= 2025; i++) {
+              document.write(`<option value="${i}">${i}</option>`);
+            }
+          </script>
+        </select>
+        <select id="hour" required>
+          <option value="" disabled selected>Hora</option>
+          <script>
+            for (let i = 0; i < 24; i++) {
+              const hour = i.toString().padStart(2, '0');
+              document.write(`<option value="${hour}:00">${hour}:00</option>`);
+            }
+          </script>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <label>Número de personas</label>
+      <input type="text" placeholder="Ingrese el número de personas" required>
+    </div>
+    <div class="row">
+      <label>Ubicación</label>
+      <select required>
+        <option value="" disabled selected>Seleccione una ubicación</option>
+        <option>Interior</option>
+        <option>Exterior</option>
+        <option>Privado</option>
+      </select>
+    </div>
+    <div class="row">
+      <label>Comentarios</label>
+      <textarea placeholder="Coméntanos, ej. ¿Festejas algo especial?"></textarea>
+    </div>
+    <button type="submit">Siguiente</button>
+  </form>
+
+  <script>
+    function nextStep(event) {
+      event.preventDefault();
+      alert('Datos registrados correctamente. Pasando al siguiente paso...');
+      window.location.href = "Metodo de pago.html"; // Redirige a la interfaz de "Método de pago"
+    }
+  </script>
+</body>
+</html>
